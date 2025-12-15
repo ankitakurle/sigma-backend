@@ -4,36 +4,31 @@ import mongoose from "mongoose";
 import "dotenv/config";
 import chatRoutes from "./routes/chat.js";
 
-const app=express();
-const PORT=process.env.PORT;
+const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-app.use((req, res, next) => {
-    if (req.path === "/") {
-        return res.redirect("/api");
-    }
-    next();
+// Root route (prevents 404)
+app.get("/", (req, res) => {
+    res.json({ status: "OK", message: "API is running" });
 });
 
-app.use("/api",chatRoutes);
+app.use("/api", chatRoutes);
 
-
-
-const connectDB=async()=>{
-    try{
+const connectDB = async () => {
+    try {
         await mongoose.connect(process.env.MONGODB_URI);
-        console.log("connecting to database")
-    }catch(err){
+        console.log("connecting to database");
+    } catch (err) {
         console.log(err);
     }
-} 
+};
 
-app.listen(PORT,()=>{
-    console.log(`Server running on port ${PORT}`);
-    connectDB();
-});
+connectDB();
+
+export default app;
+
 
 
 // app.post("/test",async(req,res)=>{
