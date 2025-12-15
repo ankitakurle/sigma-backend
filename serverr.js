@@ -5,10 +5,17 @@ import "dotenv/config";
 import chatRoutes from "./routes/chat.js";
 
 const app=express();
-const PORT=8080;
+const PORT=process.env.PORT;
 
 app.use(express.json());
 app.use(cors());
+
+app.use((req, res, next) => {
+    if (req.path === "/") {
+        return res.redirect("/api");
+    }
+    next();
+});
 
 app.use("/api",chatRoutes);
 
