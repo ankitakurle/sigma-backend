@@ -12,9 +12,8 @@ app.use(cors());
 
 app.use("/api",chatRoutes);
 
-app.listen(PORT,()=>{
-    console.log(`Server running on port ${PORT}`);
-    connectDB();
+app.get("/", (req, res) => {
+    res.send("Backend is running!");
 });
 
 const connectDB=async()=>{
@@ -24,7 +23,14 @@ const connectDB=async()=>{
     }catch(err){
         console.log(err);
     }
-}
+} 
+
+app.listen(PORT,()=>{
+    console.log(`Server running on port ${PORT}`);
+    connectDB();
+});
+
+
 // app.post("/test",async(req,res)=>{
 
 //     const options={
