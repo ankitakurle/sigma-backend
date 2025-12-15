@@ -12,7 +12,7 @@ app.use(express.json());
 const allowedOrigins = [
    
     // !!! IMPORTANT: REPLACE THIS PLACEHOLDER with your actual Vercel frontend domain !!!
-    'https://sigma-frontend-nu.vercel.app/' 
+    'https://sigma-frontend-nu.vercel.app' 
 ];
 
 const corsOptions = {
