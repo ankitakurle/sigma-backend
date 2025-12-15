@@ -7,7 +7,27 @@ import chatRoutes from "./routes/chat.js";
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+
+// serverr.js (New, controlled CORS)
+const allowedOrigins = [
+   
+    // !!! IMPORTANT: REPLACE THIS PLACEHOLDER with your actual Vercel frontend domain !!!
+    'https://sigma-frontend-nu.vercel.app/' 
+];
+
+const corsOptions = {
+    origin: (origin, callback) => {
+        // Allow requests with no origin (like mobile apps or curl) or if origin is in allowed list
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'), false);
+        }
+    }
+};
+
+app.use(cors(corsOptions));
+// app.use(cors());
 
 // Root route (prevents 404)
 app.get("/", (req, res) => {
